@@ -46,5 +46,7 @@ public static class Seeder
         };
         
         context.Platforms.AddRange(platforms);
+        
+        context.SaveChanges(); 
     }
 }
