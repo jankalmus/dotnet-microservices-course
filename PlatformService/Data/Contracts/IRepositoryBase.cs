@@ -6,8 +6,10 @@ public interface IRepositoryBase<out TEntity> where TEntity : EntityBase
 {
     void SaveChanges(); 
     
-    TEntity Get(); 
+    TEntity Get();
     
+    IEnumerable<TEntity> GetAll(); 
+
     TEntity Save();
 
     TEntity Update();
