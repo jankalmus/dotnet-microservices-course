@@ -14,31 +14,41 @@ public class PlatformRepository : IPlatformRepository
     
     public void SaveChanges()
     {
-        throw new NotImplementedException();
+        _context.SaveChanges(); 
     }
 
     public Platform Get(int id)
     {
-        throw new NotImplementedException();
+        return _context.Platforms.First(item => item.Id == id); 
     }
 
     public IEnumerable<Platform> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Platforms.ToList(); 
     }
 
     public Platform Save(Platform entity)
     {
-        throw new NotImplementedException();
+        if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+        _context.Platforms.Add(entity);
+
+        return entity; 
     }
 
-    public Platform Update()
+    public Platform Update(Platform entity)
     {
-        throw new NotImplementedException();
+        if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+        _context.Platforms.Update(entity); 
+        
+        return entity; 
     }
 
-    public void Delete()
+    public void Delete(Platform entity)
     {
-        throw new NotImplementedException();
+        if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+        _context.Platforms.Remove(entity);
     }
 }

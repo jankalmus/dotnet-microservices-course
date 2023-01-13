@@ -12,7 +12,7 @@ public interface IRepositoryBase<TEntity> where TEntity : EntityBase
 
     TEntity Save(TEntity entity);
 
-    TEntity Update();
+    TEntity Update(TEntity entity);
 
-    void Delete();
+    void Delete(TEntity entity);
 }
