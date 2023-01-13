@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data.Contracts;
 using PlatformService.Dtos;
+using PlatformService.Models;
 
 namespace PlatformService.Controllers;
 
@@ -53,4 +54,25 @@ public class PlatformsController : ControllerBase
         
         return Ok(_mapper.Map<ReadPlatformDto>(platform));  
     }
+
+    
+    /// <summary>
+    /// Creates a new platform.
+    /// </summary>
+    /// <returns>Created (201) with created platform. </returns>
+    /// <remarks>
+    /// Sample request 
+    /// </remarks>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public ActionResult<ReadPlatformDto> CreatePlatform(CreatePlatformDto dto)
+    {
+        var platform = _mapper.Map<Platform>(dto);
+
+        var createdPlatform = _repository.Save(platform);
+        
+        _repository.SaveChanges();
+
+        return CreatedAtRoute(nameof(GetPlatformById), new { Id = createdPlatform.Id }, _mapper.Map<ReadPlatformDto>(createdPlatform)); 
+    } 
 }
