@@ -5,9 +5,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["CommandService/CommandService.csproj", "CommandService/"]
+COPY ["./CommandService.csproj", "CommandService/"]
 RUN dotnet restore "CommandService/CommandService.csproj"
-COPY . .
+COPY . "CommandService/"
 WORKDIR "/src/CommandService"
 RUN dotnet build "CommandService.csproj" -c Release -o /app/build
 
