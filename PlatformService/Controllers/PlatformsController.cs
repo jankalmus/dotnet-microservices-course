@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data.Contracts;
+using PlatformService.DataServices.Synchronous.Http;
 using PlatformService.Dtos;
 using PlatformService.Models;
 
@@ -12,13 +13,15 @@ public class PlatformsController : ControllerBase
 {
     private readonly IPlatformRepository _repository;
     private readonly IMapper _mapper;
+    private readonly ICommandDataClient _commandDataClient; 
 
-    public PlatformsController(IPlatformRepository repository, IMapper mapper)
+    public PlatformsController(
+        IPlatformRepository repository, IMapper mapper, ICommandDataClient commandDataClient)
     {
         _repository = repository;
         _mapper = mapper;
+        _commandDataClient = commandDataClient;
     }
-
     
     /// <summary>
     /// Returns all platforms.
@@ -65,7 +68,7 @@ public class PlatformsController : ControllerBase
     /// </remarks>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public ActionResult<ReadPlatformDto> CreatePlatform(CreatePlatformDto dto)
+    public async Task<ActionResult<ReadPlatformDto>> CreatePlatform(CreatePlatformDto dto)
     {
         var platform = _mapper.Map<Platform>(dto);
 
@@ -73,6 +76,17 @@ public class PlatformsController : ControllerBase
         
         _repository.SaveChanges();
 
-        return CreatedAtRoute(nameof(GetPlatformById), new { Id = createdPlatform.Id }, _mapper.Map<ReadPlatformDto>(createdPlatform)); 
+        var readDto = _mapper.Map<ReadPlatformDto>(createdPlatform);
+
+        try
+        {
+            await _commandDataClient.SendPlatformToCommand(readDto);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Encountered an error on HttpRequest. Fault: {ex.Message}");
+        }
+
+        return CreatedAtRoute(nameof(GetPlatformById), new { Id = createdPlatform.Id }, readDto); 
     } 
 }
