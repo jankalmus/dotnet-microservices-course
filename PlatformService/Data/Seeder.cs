@@ -1,14 +1,36 @@
+using Microsoft.EntityFrameworkCore;
 using PlatformService.Models;
 
 namespace PlatformService.Data;
 
 public static class Seeder
 {
-    public static void SeedDatabase(this IApplicationBuilder app)
+    public static void SeedDatabase(this WebApplication app)
     {
-        using var serviceScope = app.ApplicationServices.CreateScope();
+        using var serviceScope = app.Services.CreateScope();
+
+        var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
         
-        SeedData(serviceScope.ServiceProvider.GetService<AppDbContext>());
+        if (context is null) throw new ArgumentNullException(nameof(context));
+
+        if (app.Environment.IsProduction())
+        {
+            try
+            {
+                Console.WriteLine("INFO: Attempting to migrate database.");
+                
+                context.Database.Migrate();
+                
+                Console.WriteLine("INFO: Database migration completed.");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ERROR: Database migration failed. Details: {e.Message}");
+                throw;
+            }
+        }
+        
+        SeedData(context);
     }
 
     private static void SeedData(AppDbContext? context)

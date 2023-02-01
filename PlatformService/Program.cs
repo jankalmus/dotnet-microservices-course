@@ -18,19 +18,11 @@ builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    if (builder.Environment.IsDevelopment())
-    {
-        Console.WriteLine($"INFO: Database [DEV] connectionString: {builder.Configuration.GetConnectionString("PlatformsDatabase")}");
-        options.UseNpgsql(builder.Configuration.GetConnectionString("PlatformsDatabase"));
-    }
-    else
-    {
-        Console.WriteLine($"INFO: Database connectionString: {builder.Configuration.GetConnectionString("PlatformsDatabase")}");
-        options.UseNpgsql(builder.Configuration.GetConnectionString("PlatformsDatabase"));
-    }
+    Console.WriteLine($"INFO: Database connectionString: {builder.Configuration.GetConnectionString("PlatformsDatabase")}");
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PlatformsDatabase"));
 });
 
-Console.WriteLine($"CommandService endpoint: {builder.Configuration["CommandService"]}");
+Console.WriteLine($"INFO: CommandService endpoint: {builder.Configuration["CommandService"]}");
 
 var app = builder.Build();
 
