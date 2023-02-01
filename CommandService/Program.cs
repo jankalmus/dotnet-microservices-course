@@ -1,4 +1,6 @@
-using AutoMapper; 
+using AutoMapper;
+using CommandService.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem")); 
 
 var app = builder.Build();
 
