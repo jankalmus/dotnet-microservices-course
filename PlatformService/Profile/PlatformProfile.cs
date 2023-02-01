@@ -1,4 +1,4 @@
-using PlatformService.DTO;
+using PlatformService.DTOs;
 using PlatformService.Models;
 
 namespace PlatformService.Profile;
