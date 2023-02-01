@@ -1,7 +1,7 @@
+using CommandService.Model;
 using Infrastructure.Data.Contracts.Repository;
-using PlatformService.Models;
 
-namespace PlatformService.Data.Contracts;
+namespace CommandService.Data.Contracts;
 
 public interface IPlatformRepository : IRepositoryBase<Platform>
 {

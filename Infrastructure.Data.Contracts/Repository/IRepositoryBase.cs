@@ -1,12 +1,10 @@
-using PlatformService.Models;
-
-namespace PlatformService.Data.Contracts;
+namespace Infrastructure.Data.Contracts.Repository;
 
 public interface IRepositoryBase<TEntity> where TEntity : EntityBase
 {
     void SaveChanges(); 
     
-    TEntity Get(int id);
+    TEntity? Get(int id);
     
     IEnumerable<TEntity> GetAll(); 
 
