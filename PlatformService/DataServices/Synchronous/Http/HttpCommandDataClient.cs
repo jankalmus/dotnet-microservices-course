@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Json;
-using PlatformService.Dtos;
+using PlatformService.DTO;
 
 namespace PlatformService.DataServices.Synchronous.Http;
 

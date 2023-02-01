@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data.Contracts;
 using PlatformService.DataServices.Synchronous.Http;
-using PlatformService.Dtos;
+using PlatformService.DTO;
 using PlatformService.Models;
 
 namespace PlatformService.Controllers;

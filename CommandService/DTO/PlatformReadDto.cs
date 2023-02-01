@@ -1,6 +1,6 @@
-namespace PlatformService.Dtos;
+namespace CommandService.DTO;
 
-public class ReadPlatformDto
+public class PlatformReadDto
 {
     public int Id { get; set; } = default!; 
     

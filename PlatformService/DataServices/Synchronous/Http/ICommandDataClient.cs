@@ -1,4 +1,4 @@
-using PlatformService.Dtos;
+using PlatformService.DTO;
 
 namespace PlatformService.DataServices.Synchronous.Http;
 
