@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgsql-config
+data:
+  POSTGRES_PASSWORD: nopwd4u
+  POSTGRES_USER: admin 
+  POSTGRES_DB: dbname
