@@ -10,5 +10,6 @@ public class PlatformProfile : AutoMapper.Profile
         // Source --> Target 
         CreateMap<Platform, ReadPlatformDto>();
         CreateMap<CreatePlatformDto, Platform>();
+        CreateMap<ReadPlatformDto, PlatformPublishedDto>(); 
     }
 }
