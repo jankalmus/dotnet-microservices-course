@@ -24,4 +24,4 @@ Thank you Les Jackson for the time and effort put in this incredible, detailed a
 **Solution architecture** 
 
 
-![Alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/jan-erik/Projects/msapp/Architecture.jpg?version%3D1675379923058)
+![Alt text](./Architecture.jpg)
