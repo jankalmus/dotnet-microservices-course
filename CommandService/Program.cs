@@ -2,6 +2,7 @@ using AutoMapper;
 using CommandService.Data;
 using CommandService.Data.Contracts;
 using CommandService.Data.Repository;
+using CommandService.DataServices;
 using CommandService.Events.Processing;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICommandRepository, CommandRepository>(); 
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
-builder.Services.AddSingleton<IEventProcessor, EventProcessor>(); 
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+
+builder.Services.AddHostedService<MessageBusSubscriber>(); 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem")); 
 
