@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data.Contracts;
+using PlatformService.DataServices.Asynchronous.MessageBus;
 using PlatformService.DataServices.Synchronous.Http;
 using PlatformService.DTOs;
 using PlatformService.Models;
@@ -13,14 +14,16 @@ public class PlatformsController : ControllerBase
 {
     private readonly IPlatformRepository _repository;
     private readonly IMapper _mapper;
-    private readonly ICommandDataClient _commandDataClient; 
+    private readonly ICommandDataClient _commandDataClient;
+    private readonly IMessageBusClient _messageBusClient;
 
     public PlatformsController(
-        IPlatformRepository repository, IMapper mapper, ICommandDataClient commandDataClient)
+        IPlatformRepository repository, IMapper mapper, ICommandDataClient commandDataClient, IMessageBusClient messageBusClient)
     {
         _repository = repository;
         _mapper = mapper;
         _commandDataClient = commandDataClient;
+        _messageBusClient = messageBusClient;
     }
     
     /// <summary>
@@ -84,7 +87,18 @@ public class PlatformsController : ControllerBase
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Encountered an error on HttpRequest. Fault: {ex.Message}");
+            Console.WriteLine($"ERROR: Encountered an error on HttpRequest. Fault: {ex.Message}");
+        }
+ 
+        try
+        {
+            var messageBusMsg = _mapper.Map<PlatformPublishedDto>(readDto);
+            messageBusMsg.Event = "Platform_Published"; 
+            _messageBusClient.PublishPlatform(messageBusMsg);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"ERROR: Encountered an error on publishing message. Fault: {ex.Message}");
         }
 
         return CreatedAtRoute(nameof(GetPlatformById), new { Id = createdPlatform.Id }, readDto); 
