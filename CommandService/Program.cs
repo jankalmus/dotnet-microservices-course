@@ -3,6 +3,7 @@ using CommandService.Data;
 using CommandService.Data.Contracts;
 using CommandService.Data.Repository;
 using CommandService.DataServices;
+using CommandService.DataServices.gRPC;
 using CommandService.Events.Processing;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ICommandRepository, CommandRepository>(); 
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
+builder.Services.AddScoped<IPlatformDataClient, PlatformDataClient>(); 
 
 builder.Services.AddHostedService<MessageBusSubscriber>(); 
 
@@ -37,5 +39,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.PopulatePlatforms();
 
 app.Run();
