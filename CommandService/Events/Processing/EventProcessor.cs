@@ -26,7 +26,7 @@ public class EventProcessor : IEventProcessor
 
         if (eventType == EventType.PlatformPublished)
         {
-            
+            SavePlatform(message);
         }
 
         if (eventType == EventType.Undetermined)
@@ -48,9 +48,11 @@ public class EventProcessor : IEventProcessor
                 var platform = _mapper.Map<Platform>(dto);
 
                 if (repository!.ExternalPlatformExists(platform.ExternalId)) return;
-                
+                 
                 repository.Save(platform); 
                 repository.SaveChanges();
+                
+                Console.WriteLine("INFO: Platform added to database.");
             }
             catch (Exception ex)
             {
