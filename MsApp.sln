@@ -7,6 +7,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{FB91ABF4-41C3-4272-8435-52F14904B76D}"
 	ProjectSection(SolutionItems) = preProject
 		K8S\ps-depl.yaml = K8S\ps-depl.yaml
+		K8S\cs-depl.yaml = K8S\cs-depl.yaml
+		K8S\ingress-srv.yaml = K8S\ingress-srv.yaml
+		K8S\local-pvc.yaml = K8S\local-pvc.yaml
+		K8S\pgsql-config.yaml = K8S\pgsql-config.yaml
+		K8S\pgsql-plat-depl.yaml = K8S\pgsql-plat-depl.yaml
+		K8S\platforms-np-srv.yaml = K8S\platforms-np-srv.yaml
+		K8S\rabbitmq-depl.yaml = K8S\rabbitmq-depl.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Data.Contracts", "Infrastructure.Data.Contracts\Infrastructure.Data.Contracts.csproj", "{23C21FFF-0CB3-4884-B888-98B6A670C384}"
