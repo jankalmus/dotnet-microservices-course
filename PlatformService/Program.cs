@@ -3,6 +3,7 @@ using PlatformService.Data;
 using PlatformService.Data.Contracts;
 using PlatformService.Data.Repository;
 using PlatformService.DataServices.Asynchronous.MessageBus;
+using PlatformService.DataServices.Synchronous.gRPC;
 using PlatformService.DataServices.Synchronous.Http;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
 builder.Services.AddSingleton<IMessageBusClient, MessageBusClient>(); 
 
-builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();  
+builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+builder.Services.AddGrpc(); 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -35,10 +37,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+ 
 app.SeedDatabase();
 
 app.UseHttpsRedirection();
+
+app.MapGrpcService<GrpcPlatformService>();
+
+app.MapGet("/proto/platforms.proto", async context =>
+{
+    await context.Response.WriteAsync(File.ReadAllText("Protobufs/platforms.proto"));
+});
 
 app.MapControllers();
 
