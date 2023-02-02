@@ -23,18 +23,8 @@ public sealed class PlatformsController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
     {
-        Console.WriteLine("DEBUG: Retrieving platforms.");
-
         var platforms = _platformRepository.GetAll();
         
         return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platforms)); 
-    }
-
-    [HttpPost]
-    public ActionResult Test()
-    {
-        Console.WriteLine("OK");
-
-        return Ok(); 
     }
 }
