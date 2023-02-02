@@ -2,6 +2,7 @@ using AutoMapper;
 using CommandService.Data;
 using CommandService.Data.Contracts;
 using CommandService.Data.Repository;
+using CommandService.Events.Processing;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +16,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<ICommandRepository, CommandRepository>();
-builder.Services.AddScoped<IPlatformRepository, PlatformRepository>(); 
+builder.Services.AddScoped<ICommandRepository, CommandRepository>(); 
+builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
+builder.Services.AddSingleton<IEventProcessor, EventProcessor>(); 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMem")); 
 

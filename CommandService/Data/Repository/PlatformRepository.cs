@@ -12,4 +12,9 @@ public class PlatformRepository : BaseRepository<Platform, AppDbContext>, IPlatf
     {
         return _context.Platforms.Any(item => item.Id == platformId); 
     }
+
+    public bool ExternalPlatformExists(int externalPlatformId)
+    {
+        return _context.Platforms.Any(item => item.ExternalId == externalPlatformId); 
+    }
 }
