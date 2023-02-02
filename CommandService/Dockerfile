@@ -5,9 +5,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["./CommandService.csproj", "CommandService/"]
+COPY ["./CommandService/CommandService.csproj", "CommandService/"]
+COPY ["./Infrastructure.Data.Contracts/Infrastructure.Data.Contracts.csproj", "Infrastructure.Data.Contracts/"]
+
 RUN dotnet restore "CommandService/CommandService.csproj"
-COPY . "CommandService/"
+RUN dotnet restore "Infrastructure.Data.Contracts/Infrastructure.Data.Contracts.csproj"
+
+COPY "./CommandService" "CommandService/"
+COPY "./Infrastructure.Data.Contracts/" "Infrastructure.Data.Contracts/"
+
 WORKDIR "/src/CommandService"
 RUN dotnet build "CommandService.csproj" -c Release -o /app/build
 

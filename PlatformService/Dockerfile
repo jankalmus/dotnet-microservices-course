@@ -5,9 +5,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["./PlatformService.csproj", "PlatformService/"]
+COPY ["./PlatformService/PlatformService.csproj", "PlatformService/"]
+COPY ["./Infrastructure.Data.Contracts/Infrastructure.Data.Contracts.csproj", "Infrastructure.Data.Contracts/"]
+
 RUN dotnet restore "PlatformService/PlatformService.csproj"
-COPY . "PlatformService/"
+RUN dotnet restore "Infrastructure.Data.Contracts/Infrastructure.Data.Contracts.csproj"
+
+COPY "./PlatformService" "PlatformService/"
+COPY "./Infrastructure.Data.Contracts/" "Infrastructure.Data.Contracts/"
+
 WORKDIR "/src/PlatformService"
 RUN dotnet build "PlatformService.csproj" -c Release -o /app/build
 
