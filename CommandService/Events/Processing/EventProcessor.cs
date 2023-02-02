@@ -39,7 +39,7 @@ public class EventProcessor : IEventProcessor
     {
         using (var scope = _scopeFactory.CreateScope())
         {
-            var serviceProvider = _scopeFactory.CreateScope().ServiceProvider;
+            var serviceProvider = scope.ServiceProvider;
             var repository = serviceProvider.GetService<IPlatformRepository>();
             var dto = JsonSerializer.Deserialize<PlatformPublishedDto>(notificationMessage); 
 
