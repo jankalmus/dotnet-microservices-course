@@ -28,7 +28,7 @@
 
     kubectl create secret generic ?? —from-literal=
 
-**Terminid:**
+**Terminology:**
 
 K8S object
 
